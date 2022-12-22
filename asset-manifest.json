@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/sellter_ui/static/css/main.9db7990b.css",
-    "main.js": "/sellter_ui/static/js/main.f2e7efc7.js",
+    "main.js": "/sellter_ui/static/js/main.1014b7ba.js",
     "static/js/696.ade5053d.chunk.js": "/sellter_ui/static/js/696.ade5053d.chunk.js",
     "static/js/409.9173a5e2.chunk.js": "/sellter_ui/static/js/409.9173a5e2.chunk.js",
     "static/js/68.4d3b0405.chunk.js": "/sellter_ui/static/js/68.4d3b0405.chunk.js",
@@ -52,7 +52,7 @@
     "static/media/roboto-greek-ext-700-normal.woff2": "/sellter_ui/static/media/roboto-greek-ext-700-normal.bd9854c751441ccc1a70.woff2",
     "index.html": "/sellter_ui/index.html",
     "main.9db7990b.css.map": "/sellter_ui/static/css/main.9db7990b.css.map",
-    "main.f2e7efc7.js.map": "/sellter_ui/static/js/main.f2e7efc7.js.map",
+    "main.1014b7ba.js.map": "/sellter_ui/static/js/main.1014b7ba.js.map",
     "696.ade5053d.chunk.js.map": "/sellter_ui/static/js/696.ade5053d.chunk.js.map",
     "409.9173a5e2.chunk.js.map": "/sellter_ui/static/js/409.9173a5e2.chunk.js.map",
     "68.4d3b0405.chunk.js.map": "/sellter_ui/static/js/68.4d3b0405.chunk.js.map",
@@ -72,6 +72,6 @@
   },
   "entrypoints": [
     "static/css/main.9db7990b.css",
-    "static/js/main.f2e7efc7.js"
+    "static/js/main.1014b7ba.js"
   ]
 }
