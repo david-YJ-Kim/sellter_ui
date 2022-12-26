@@ -3,6 +3,7 @@ import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Box from "@mui/material/Box";
+import PropTypes from "prop-types";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -12,7 +13,7 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-export const DirectionStack = () => {
+const HorizontalStack = () => {
     return (
         <div>
             <Box>
@@ -37,4 +38,41 @@ export const DirectionStack = () => {
             </Box>
         </div>
     );
+}
+
+
+
+const VerticalStack = () =>{
+    return (
+        <div>
+            <Stack spacing={1}>
+                <Item>Item 1</Item>
+                <Item>Item 2</Item>
+                <Item>Item 3</Item>
+            </Stack>
+        </div>
+    )
+}
+
+
+export const MuiStack = ({type}) => {
+    if(type === 'Vertical'){
+        return <VerticalStack />
+    }
+
+    if(type === 'Horizontal'){
+        return <HorizontalStack />
+    }
+}
+
+
+MuiStack.propTypes = {
+    type : PropTypes.oneOf([
+        "Vertical",
+        "Horizontal"
+    ])
+}
+
+MuiStack.defaultProps = {
+    type : "Horizontal"
 }

@@ -17,7 +17,7 @@ import MainDashBoard from "./routes/MainDashBoard";
 
 export default function App(){
     return(
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <Routes>
                 {/*<Route path="/" element={<Dashboard />} />*/}
                 <Route path="/" element={<Login />}/>

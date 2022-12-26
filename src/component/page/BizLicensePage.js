@@ -175,7 +175,7 @@ const BizLicense = () => {
             justifyContent: 'center',
             display: 'flex',
             margin: 'auto',
-            marginTop: '15%',
+            marginTop: '5%',
             border: 1,
             borderColor: 'divider',
             padding: '8px, 16px',
