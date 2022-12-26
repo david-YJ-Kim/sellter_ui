@@ -105,14 +105,25 @@ const DataTableRows = [
 ];
 
 const DataTable = () => {
+
+    const [selectedRows, setSelectedRows] = React.useState(null);
+    const handleSelectRow = (ids) => {
+        console.log(ids);
+        setSelectedRows(ids);
+    }
     return (
         <div style={{ height: 400, width: '100%' }}>
+            <h1>{selectedRows}</h1>
             <DataGrid
                 rows={DataTableRows}
                 columns={DataTableColumns}
                 pageSize={7}
                 rowsPerPageOptions={[7]}
                 checkboxSelection
+                onSelectionModelChange={(ids) => {
+                    // console.log(ids);
+                    handleSelectRow(ids);
+                }}
             />
         </div>
     );
