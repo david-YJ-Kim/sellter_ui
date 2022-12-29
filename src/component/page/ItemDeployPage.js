@@ -1,8 +1,9 @@
 import * as React from 'react';
+import {useEffect} from 'react';
 import {Header} from "../organisms/Header";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import {Card, CardActions, CardContent, Switch} from "@mui/material";
+import {Card, CardActions, CardContent, FormGroup, Switch} from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -11,7 +12,11 @@ import MuiTitle from "../atoms/Text/Title/MuiTitle";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import {BizMarketMetaInfoSample} from "../../utils/data/itemDeploy";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import {useEffect} from "react";
+import {DesktopDatePicker, LocalizationProvider} from "@mui/x-date-pickers";
+import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
+import TextField from "@mui/material/TextField";
+import Checkbox from "@mui/material/Checkbox";
+import {DataGrid, GridColDef, GridValueGetterParams} from "@mui/x-data-grid";
 
 
 const BizMarketMetaInfoCard = ({market, bizLicense, marginRate, marginWon, autoRegi}) => {
@@ -21,13 +26,13 @@ const BizMarketMetaInfoCard = ({market, bizLicense, marginRate, marginWon, autoR
         setFlag(autoRegi)
     }, [autoRegi])
 
-    const AutoRegiInputFormHandle = () =>{
+    const AutoRegiInputFormHandle = () => {
         setFlag(!flag);
     }
     const AutoRegiInputForm = ({defaultFlag}) => {
         const controlVal = () => {
             // console.log(defaultFlag)
-            return defaultFlag ? <Switch defaultChecked/> : <Switch />
+            return defaultFlag ? <Switch defaultChecked/> : <Switch/>
         }
 
         return <FormControlLabel
@@ -50,7 +55,7 @@ const BizMarketMetaInfoCard = ({market, bizLicense, marginRate, marginWon, autoR
                     {market}
                 </Typography>
                 <Typography sx={{mb: 1.5}} color="text.secondary">
-                   <AutoRegiInputForm defaultFlag={flag}/>
+                    <AutoRegiInputForm defaultFlag={flag}/>
                     <br/>
                     마진율:{marginRate}%
                     <br/>
@@ -80,7 +85,7 @@ const BizMarketMetaInfoCard = ({market, bizLicense, marginRate, marginWon, autoR
 const BizMarketMetaInfoStack = ({metaData, syncData, bizLicense, defualtMarketList}) => {
 
     const info = metaData[bizLicense];
-    const isRegister = (mrk)  => {
+    const isRegister = (mrk) => {
         return Object.keys(info).includes(mrk);
     }
 
@@ -103,24 +108,129 @@ const BizMarketMetaInfoStack = ({metaData, syncData, bizLicense, defualtMarketLi
 
 const BizKeyWordPanel = ({syncMethod}) => {
 
+    const [startDate, setStartDate] = React.useState();
+    const [endDate, setEndDate] = React.useState();
+    const [unRegiFlag, setUnRegiFlag] = React.useState(false);
+    const [searchKeyWord, setSearchKeyWord] = React.useState();
+
+    const triggerSyncData = (isKeyPRD) => {
+
+        if (startDate === undefined || endDate === undefined) {
+            alert("날짜를 날지정해주세ㅇ.ㅇ");
+            return;
+        }
+
+        let dto = {
+            startDate: startDate,
+            endDate: endDate,
+            unRegiFlag: unRegiFlag,
+            isKeyPRD: isKeyPRD,
+            searchKeyWord
+        }
+
+        return syncMethod(dto);
+    }
+
+    const handleStartDate = (newDate) => {
+        setStartDate(newDate.format('YYYY-MM-DD'));
+    };
+
+    const handleEndDate = (newDate) => {
+        setEndDate(newDate.format('YYYY-MM-DD'));
+    };
+
     return (
         <div>
-            <h1>BizKeyWordPanel</h1>
-            <Button onClick={() => {
-                syncMethod('Sync Data');
-            }
-            } >
-                조회
-            </Button>
+            <h1>수집일</h1>
+            {/*등록일 설정*/}
+            <Stack direction={"row"}>
+
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DesktopDatePicker
+                        label="Start Date"
+                        name="startDate"
+                        inputFormat="MM/DD/YYYY"
+                        value={startDate}
+                        onChange={handleStartDate}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
+
+                    <DesktopDatePicker
+                        label="End Date"
+                        name={"endDate"}
+                        inputFormat="MM/DD/YYYY"
+                        value={endDate}
+                        onChange={handleEndDate}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
+                </LocalizationProvider>
+
+                {/*미등록 상품만*/}
+                <FormGroup>
+                    <FormControlLabel onClick={(event) => {
+                        setUnRegiFlag(!unRegiFlag);
+                    }} control={<Checkbox/>} label="미등록 상품만"/>
+                </FormGroup>
+
+
+                <TextField
+                    // autoComplete="given-name"
+                    name="hashList"
+                    onChange={(event) => {
+                        setSearchKeyWord(event.target.value)
+                    }
+                    }
+                    required
+                    // label="키워드를 입력하세요."
+                />
+
+                <Button onClick={() => {
+                    triggerSyncData(false);
+                }
+                }>
+                    조회
+                </Button>
+                <Button onClick={() => {
+                    triggerSyncData(true);
+                }
+                }>
+                    핵심상품조회
+                </Button>
+                <Button onClick={() => {
+                    alert("대상 마켓 삭제..? 란 무엇인가.");
+                }
+                }>
+                    대상 마켓 삭제
+                </Button>
+                <Button onClick={() => {
+                    alert("대상 마켓 업로드..? 란 무엇인가.");
+                }
+                }>
+                    대상 마켓 업로드
+                </Button>
+            </Stack>
         </div>
     )
 
 }
-const BizKeyWordTable = ({syncMethod}) => {
+const BizKeyWordTable = ({syncMethod, dto}) => {
 
     return (
         <div>
-            <h1>BizKeyWordTable</h1>
+            {/*<h3>{JSON.stringify(dto)}</h3>*/}
+            <div style={{height: 400, width: '100%'}}>
+                <DataGrid
+                    rows={dto.rows}
+                    columns={dto.columns}
+                    pageSize={7}
+                    rowsPerPageOptions={[7]}
+                    checkboxSelection
+                    onSelectionModelChange={(ids) => {
+                        // console.log(ids);
+                        syncMethod(ids);
+                    }}
+                />
+            </div>
         </div>
     )
 }
@@ -135,20 +245,61 @@ const BizKeyWordInfo = ({metaData, bizLicense}) => {
     const getFromTable = (tableData) => {
         setSelectedRows(tableData);
     }
-    // BizKeyWordPanel
 
+    const getTableData = (panelData) => {
 
-    // BizKeyWordTable
-    return(
+        return {
+            rows: ItemTableRows,
+            columns: ItemTableColumns
+        };
+
+        // return panelData === undefined ? "Init No Data are transfered" : panelData.searchKeyWord + "HelloWorld";
+    }
+
+    const ItemTableColumns: GridColDef[] = [
+        {field: 'id', headerName: 'ID', width: 70},
+        {field: 'firstName', headerName: 'First name', width: 130},
+        {field: 'lastName', headerName: 'Last name', width: 130},
+        {
+            field: 'age',
+            headerName: 'Age',
+            type: 'number',
+            width: 90,
+        },
+        {
+            field: 'fullName',
+            headerName: 'Full name',
+            description: 'This column has a value getter and is not sortable.',
+            sortable: false,
+            width: 160,
+            valueGetter: (params: GridValueGetterParams) =>
+                `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+        },
+    ];
+
+    const ItemTableRows = [
+        {id: 1, lastName: 'Snow', firstName: 'Jon', age: 35},
+        {id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42},
+        {id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45},
+        {id: 4, lastName: 'Stark', firstName: 'Arya', age: 16},
+        {id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null},
+        {id: 6, lastName: 'Melisandre', firstName: null, age: 150},
+        {id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44},
+        {id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36},
+        {id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65},
+    ];
+
+    return (
         <div>
             <Stack direction={"row"}>
                 <ArrowRightIcon/>
                 <MuiTitle text={"상품 키워드 리스트"}/>
             </Stack>
-            <h1>BizKeyWordInfo</h1>
+            <h1>BizKeyWordInfo : {bizLicense}</h1>
             <h1>{JSON.stringify(searchData)}</h1>
-            <BizKeyWordPanel syncMethod={getFromPanel} />
-            <BizKeyWordTable syncMethod={getFromTable} />
+            <h1>SelctedRows : {selectedRows}</h1>
+            <BizKeyWordPanel syncMethod={getFromPanel}/>
+            <BizKeyWordTable syncMethod={getFromTable} dto={getTableData(searchData)}/>
         </div>
 
     )
@@ -185,6 +336,7 @@ const ItemDeployArea = ({bizMarketMetaInfo, defaultMarketList}) => {
                 <Button
                     onClick={(event) => {
                         event.preventDefault();
+                        alert("변경 데이터 저장 Query 수행 " + bizLicense)
                     }
                     }
                 >
@@ -194,6 +346,7 @@ const ItemDeployArea = ({bizMarketMetaInfo, defaultMarketList}) => {
                 <Button
                     onClick={(event) => {
                         event.preventDefault();
+                        alert("요거는 어떻게 처리해야할까... 다시 랜더링 하면 될라나..?")
                     }
                     }
                 >
