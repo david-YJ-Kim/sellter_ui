@@ -14,6 +14,8 @@ import KeywordCollection from "./routes/KeywordCollection";
 import SaleManagement from "./routes/SaleManagement";
 import AboutUs from "./routes/AboutUs";
 import MainDashBoard from "./routes/MainDashBoard";
+import ItemManagement from "./routes/ItemManagement";
+import SaleAnalysis from "./routes/SaleAnalysis";
 
 export default function App(){
     return(
@@ -26,7 +28,9 @@ export default function App(){
                 <Route path="/bizLicense" element={<BizLicense />}/>
                 <Route path="/itemCollection" element={<ItemCollection />}/>
                 <Route path="/itemDeploy" element={<ItemDeploy />}/>
+                <Route path="/itemManagement" element={<ItemManagement />} />
                 <Route path="/keywordCollection" element={<KeywordCollection />}/>
+                <Route path="/salesAnalysis" element={<SaleAnalysis />}/>
                 <Route path="/salesManagement" element={<SaleManagement />}/>
                 <Route path="/about-us" element={<AboutUs />}/>
             </Routes>

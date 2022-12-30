@@ -10,11 +10,10 @@ import {makeStyles} from '@material-ui/core/styles';
 import Stack from "@mui/material/Stack";
 import {styled} from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 
 import {Header} from "../organisms/Header";
-import {BizAccount} from "./Layout";
+import {bizLicenseSample, marketSample} from "../../utils/data/itemDeploy";
 
 const MarketRegister = ({buttonVal, marketList}) => {
     // console.log(buttonVal, marketList);
@@ -145,30 +144,7 @@ const BizLicense = () => {
         alert("Add Biz License");
     }
 
-    const registableMarket = ['쿠팡', 'G마켓', '네이버', '11번가', '위메프'];
-    const bizLicenseInfo = [
-        {
-            'name': '사업자1',
-            'market': ['쿠팡', '네이버']
-        },
-        {
-            'name': '사업자2',
-            'market': ['G마켓']
-        },
-        {
-            'name': '사업자3',
-            'market': ['쿠팡']
-        },
-        {
-            'name': '사업자4',
-            'market': []
-        },
-        {
-            'name': '사업자5',
-            'market': []
-        },
-    ]
-
+    const registableMarket = marketSample;
     return (
         <Box sx={{
             width: '70%',
@@ -219,7 +195,7 @@ const BizLicense = () => {
                     <MuiTitle text={"사업자 추가"}/>
                 </Stack>
 
-                {bizLicenseInfo.map((info, index) => (
+                {bizLicenseSample.map((info, index) => (
 
                     <Box>
                         <Stack direction="row" spacing={1} sx={{marginTop: '3px'}}>

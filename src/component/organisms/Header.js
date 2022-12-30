@@ -9,8 +9,8 @@ import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import {Link as RouterLink} from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 
 const ToggleButtons = () => {
 
@@ -37,50 +37,55 @@ const ToggleButtons = () => {
             aria-label="text alignment"
         >
 
-            <RouterLink to={'/'}  onClick={handleTarget} value="">
+            <RouterLink to={'/'} onClick={handleTarget} value="">
                 <ToggleButton value="" aria-label="left aligned">
                     Home
                 </ToggleButton>
             </RouterLink>
 
-            <RouterLink to={'/bizLicense'} >
+            <RouterLink to={'/bizLicense'}>
                 <ToggleButton value="bizLicense" aria-label="centered">
                     계정설정
                 </ToggleButton>
             </RouterLink>
 
-            <RouterLink to={'/keywordCollection'} >
+            <RouterLink to={'/keywordCollection'}>
                 <ToggleButton value="keywordCollection" aria-label="keywordCollection">
                     키워드 수집
                 </ToggleButton>
             </RouterLink>
 
-            <RouterLink to={'/itemCollection'} >
+            <RouterLink to={'/itemCollection'}>
                 <ToggleButton value="itemCollection" aria-label="right aligned">
                     상품 수집
                 </ToggleButton>
             </RouterLink>
 
 
-            <RouterLink to={'/itemDeploy'} >
+            <RouterLink to={'/itemDeploy'}>
                 <ToggleButton value="itemDeploy" aria-label="right aligned">
                     상품 업로드
                 </ToggleButton>
             </RouterLink>
 
-            <ToggleButton value="right" aria-label="right aligned" disabled>
-                상품 관리
-            </ToggleButton>
+            <RouterLink to={'/itemManagement'}>
+                <ToggleButton value="right" aria-label="right aligned">
+                    상품 관리
+                </ToggleButton>
+            </RouterLink>
 
-            <RouterLink to={'/salesManagement'} >
+            <RouterLink to={'/salesManagement'}>
                 <ToggleButton value="salesManagement" aria-label="right aligned">
                     판매 관리
                 </ToggleButton>
             </RouterLink>
 
-            <ToggleButton value="right" aria-label="right aligned" disabled>
-                판매 분석
-            </ToggleButton>
+            <RouterLink to={'/salesAnalysis'}>
+                <ToggleButton value="right" aria-label="right aligned">
+                    판매 분석
+                </ToggleButton>
+            </RouterLink>
+
             {/*<ToggleButton value="justify" aria-label="justified" disabled>*/}
             {/*    <FormatAlignJustifyIcon />*/}
             {/*</ToggleButton>*/}
@@ -94,8 +99,8 @@ export const Header = () => {
         <div>
             <Box>
                 <Stack direction="row" spacing={5}>
-                    <MuiTitle text={"SELLTER"} />
-                    <ToggleButtons />
+                    <MuiTitle text={"SELLTER"}/>
+                    <ToggleButtons/>
 
 
                 </Stack>
